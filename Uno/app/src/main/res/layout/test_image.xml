@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="470dp"
+    <TextView
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:text="New Text"
+        android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.83" />
+
+
 </LinearLayout>

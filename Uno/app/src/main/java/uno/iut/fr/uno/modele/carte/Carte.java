@@ -1,5 +1,6 @@
 package uno.iut.fr.uno.modele.carte;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.concurrent.CompletionService;
 
@@ -8,7 +9,7 @@ import uno.iut.fr.uno.modele.Color;
 /**
  * Created by Max on 04/03/2015.
  */
-public class Carte {
+public class Carte implements Serializable{
     private Color color;
     protected int carteValue;
 

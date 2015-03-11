@@ -40,11 +40,12 @@ import uno.iut.fr.uno.modele.Bluetooth.ConnectClientThread;
 import uno.iut.fr.uno.modele.Board;
 import uno.iut.fr.uno.modele.Game;
 import uno.iut.fr.uno.modele.Player;
+import uno.iut.fr.uno.modele.carte.Carte;
 
 
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     private Button b1;
-    private EditText t1;
+    public EditText t1;
     private ListView l1;
     private BluetoothAdapter ba;
     private ArrayAdapter mArrayAdapter;
@@ -83,7 +84,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         l1.setAdapter(mArrayAdapter);
         t1.setText("marche pas");
         l1.setOnItemClickListener(this);
-        AcceptServerThread ast = new AcceptServerThread("Max",ba);
+        AcceptServerThread ast = new AcceptServerThread("Max",ba, this);
         ast.start();
     }
 
@@ -202,5 +203,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }catch (Exception e){
             Log.e("Connection : ", "Connection echec avec le divice");
         }
+    }
+
+    public void setText (Carte carte){
+        t1.setText(carte.toString());
     }
 }

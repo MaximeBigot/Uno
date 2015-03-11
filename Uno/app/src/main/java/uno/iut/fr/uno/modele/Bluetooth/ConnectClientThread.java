@@ -1,8 +1,10 @@
 package uno.iut.fr.uno.modele.Bluetooth;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -10,10 +12,14 @@ import android.widget.Toast;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
 import uno.iut.fr.uno.MainActivity;
+import uno.iut.fr.uno.Test;
+import uno.iut.fr.uno.modele.Board;
+import uno.iut.fr.uno.modele.carte.Carte;
 
 /**
  * Created by Max on 10/03/2015.
@@ -22,12 +28,12 @@ public class ConnectClientThread extends Thread{
     public static final String BT_SERVER_UUID_INSECURE = "8ce255c0-200a-11e0-ac64-0800200c9a66";
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
-    private final Context context;
+    private final MainActivity activity;
 
-    public ConnectClientThread(BluetoothDevice device, Context context) {
+    public ConnectClientThread(BluetoothDevice device, MainActivity activity) {
         // Use a temporary object that is later assigned to mmSocket,
         // because mmSocket is final
-        this.context = context;
+        this.activity = activity;
         BluetoothSocket tmp = null;
         mmDevice = device;
 
@@ -56,13 +62,19 @@ public class ConnectClientThread extends Thread{
         // Do work to manage the connection (in a separate thread)
         Log.i("Reception", "Effectuée");
         try {
-            byte[] buffer = new byte[1024];
+            /*byte[] buffer = new byte[1024];
             int bytes;
 
             bytes = mmSocket.getInputStream().read(buffer);
-            String readMessage = new String(buffer, 0, bytes);
-            Log.i("Reception message", readMessage);
-        }catch (Exception e){Log.i("Reception", "Erreur !");}
+            String readMessage = new String(buffer, 0, bytes);*/
+            ObjectInputStream ois = new ObjectInputStream(mmSocket.getInputStream());
+            Carte carte = (Carte)ois.readObject();
+            Intent intent = new Intent(activity, Test.class);
+            intent.putExtra("carte", carte);
+            activity.startActivity(intent);
+        }catch (Exception e){
+            Log.i("Reception", "Erreur !");
+        }
     }
 
     /** Will cancel an in-progress connection, and close the socket */

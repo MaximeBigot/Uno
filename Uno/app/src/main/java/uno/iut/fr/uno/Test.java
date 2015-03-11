@@ -12,19 +12,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import uno.iut.fr.uno.modele.carte.Carte;
 
 /**
  * Created by Max on 10/03/2015.
  */
 public class Test extends ActionBarActivity {
-    private ImageView img;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_image);
-
-        img = (ImageView)findViewById(R.id.imageView);
+        tv = (TextView)findViewById(R.id.textView);
+        Bundle extra = getIntent().getExtras();
+        tv.setText(extra.getSerializable("carte").toString());
     }
 
     @Override
@@ -47,5 +51,9 @@ public class Test extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setText (Carte carte){
+        tv.setText(carte.toString());
     }
 }

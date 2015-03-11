@@ -1,6 +1,7 @@
 package uno.iut.fr.uno.modele;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +14,7 @@ import uno.iut.fr.uno.modele.carte.Carte;
 /**
  * Created by Max on 04/03/2015.
  */
-public class Board {
+public class Board implements Serializable{
     ArrayList<Carte>pile = Game.getGame();
     Stack<Carte> tas = new Stack<>();
     LinkedList<Player>players;

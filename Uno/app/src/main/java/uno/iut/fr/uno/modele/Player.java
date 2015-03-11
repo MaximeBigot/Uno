@@ -7,7 +7,7 @@ import uno.iut.fr.uno.modele.carte.Carte;
 /**
  * Created by Max on 04/03/2015.
  */
-public class Player {
+public class Player{
     private String name;
     private ArrayList<Carte>cartes;
 
