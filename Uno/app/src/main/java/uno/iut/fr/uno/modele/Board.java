@@ -16,6 +16,7 @@ import uno.iut.fr.uno.modele.carte.Carte;
  */
 public class Board implements Serializable{
     ArrayList<Carte>pile = Game.getGame();
+    Stack<Carte> pioche;
     Stack<Carte> tas = new Stack<>();
     LinkedList<Player>players;
 
@@ -38,6 +39,8 @@ public class Board implements Serializable{
             }
         }
         tas.push(pile.remove(1));
+        pioche = new Stack<>();
+        pioche.containsAll(pile);
     }
 
     public void play(){
@@ -71,5 +74,9 @@ public class Board implements Serializable{
             str.append(p.toString() + " ");
         }
         return str.toString();
+    }
+
+    public void piocherCarte (Player player){
+        player.addCarte(pioche.remove(pioche.indexOf(pioche.firstElement())));
     }
 }

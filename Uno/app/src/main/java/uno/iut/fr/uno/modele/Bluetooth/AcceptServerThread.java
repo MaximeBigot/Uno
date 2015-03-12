@@ -45,16 +45,8 @@ public class AcceptServerThread extends Thread{
         while (true){
             try{
                 socket = mServerSocket.accept();
-                //DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-                //dos.writeChars("hello");
-                //dos.close();
-                Carte carte = new Carte(Color.Blue, 9);
-                oos.writeObject(carte);
-                Intent intent = new Intent(activity, Test.class);
-                intent.putExtra("carte", carte);
-                activity.startActivity(intent);
-                Log.i("Connection", "Effectuée");
+                ServerThread thread = new ServerThread(socket);
+                thread.start();
                 if(socket != null){
                     mServerSocket.close();
                     break;

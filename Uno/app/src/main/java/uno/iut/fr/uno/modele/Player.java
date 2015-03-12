@@ -1,7 +1,10 @@
 package uno.iut.fr.uno.modele;
 
+import android.bluetooth.BluetoothSocket;
+
 import java.util.ArrayList;
 
+import uno.iut.fr.uno.modele.Bluetooth.ClientThread;
 import uno.iut.fr.uno.modele.carte.Carte;
 
 /**
@@ -24,6 +27,15 @@ public class Player{
 
     }
 
+    public void poserCarte(Carte carte){
+        for (Carte c : cartes){
+            if(c.getValue() == carte.getValue() && c.getColor() == carte.getColor()){
+                Board.getInstance().pullCarte(c);
+                break;
+            }
+        }
+    }
+
     @Override
     public String toString (){
         StringBuffer str = new StringBuffer();
@@ -33,6 +45,7 @@ public class Player{
         }
         return str.toString();
     }
+
 }
 
 
