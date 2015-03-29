@@ -41,7 +41,7 @@ public class ConnectClientThread extends Thread{
         try {
             // MY_UUID is the app's UUID string, also used by the server code
             tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(BT_SERVER_UUID_INSECURE));
-        } catch (IOException e) { }
+        } catch (IOException ioe) {Log.e("ConnectClientThread : IOException : ", "Instanciation socket", ioe); }
         mmSocket = tmp;
     }
 
@@ -51,15 +51,16 @@ public class ConnectClientThread extends Thread{
             // Connect the device through the socket. This will block
             // until it succeeds or throws an exception
             mmSocket.connect();
-        } catch (IOException connectException) {
-            // Unable to connect; close the socket and get out
+        } catch (IOException ioe) {
+            Log.e("ConnectClientThread : IOException : ", "Connexion impossible", ioe);
             try {
                 mmSocket.close();
-            } catch (IOException closeException) { }
+            } catch (IOException closeException) {Log.e("ConnectClientThread : IOException : ", "Close impossible", closeException);}
             return;
         }
 
-        // Do work to manage the connection (in a separate thread)
+        ClientThread clientThread = new ClientThread(mmSocket);
+        clientThread.start();
         Log.i("Reception", "Effectuée");
         try {
             /*byte[] buffer = new byte[1024];
@@ -72,15 +73,13 @@ public class ConnectClientThread extends Thread{
             Intent intent = new Intent(activity, Test.class);
             intent.putExtra("carte", carte);
             activity.startActivity(intent);
-        }catch (Exception e){
-            Log.i("Reception", "Erreur !");
-        }
+        }catch (Exception e){Log.i("ConnectClientThread : Exception : ", "Envoie des donnees", e);}
     }
 
     /** Will cancel an in-progress connection, and close the socket */
     public void cancel() {
         try {
             mmSocket.close();
-        } catch (IOException e) { }
+        } catch (IOException ioe) {Log.e("ConnectClientThread : IOException : ", "Close socket", ioe);}
     }
 }

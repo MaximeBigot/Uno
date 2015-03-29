@@ -37,16 +37,12 @@ public class ServerThread extends Thread{
                 }
             }
 
-        }catch (IOException ioe){
-            Log.e("ServerThread : IOException : ", "Lecture sur la socket");
-        }catch (ClassNotFoundException cnfe){
-            Log.e("ServerThread : CassNotFoundException : ", "Lecture sur la socket");
+        }catch (IOException ioe){Log.e("ServerThread : IOException : ", "Lecture sur la socket", ioe);
+        }catch (ClassNotFoundException cnfe){Log.e("ServerThread : CassNotFoundException : ", "Lecture sur la socket", cnfe);
         }finally {
             try {
                 ois.close();
-            } catch (IOException ioe) {
-                Log.e("ServerThread : IOException : ", "Fermeture lecture sur la socket");
-            }
+            } catch (IOException ioe) {Log.e("ServerThread : IOException : ", "Fermeture lecture sur la socket", ioe);}
         }
     }
 }

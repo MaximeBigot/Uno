@@ -2,6 +2,9 @@ package uno.iut.fr.uno.modele;
 
 import android.bluetooth.BluetoothSocket;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import uno.iut.fr.uno.modele.carte.Carte;
@@ -21,6 +24,9 @@ public abstract class IStrategyCommandeResolverServer {
     private static HashMap<BluetoothSocket, Player>players = new HashMap<>();
     public static void addPlayer(BluetoothSocket socket, Player player){
         players.put(socket, player);
+    }
+    public static ArrayList<Player> getPlayers(){
+        return new ArrayList<>(players.values());
     }
     public static void delPlayer(BluetoothSocket socket, Player player){
         players.remove(socket);

@@ -23,7 +23,7 @@ public class ClientThread extends Thread{
                 String msgRead = dis.readUTF();
             }
         }catch (IOException ioe){
-            Log.e("ClientThread : IOException : ", "Lecture sur la socket");
+            Log.e("ClientThread : IOException : ", "Lecture sur la socket", ioe);
         }
     }
 }

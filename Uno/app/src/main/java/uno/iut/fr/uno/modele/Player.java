@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothSocket;
 import java.util.ArrayList;
 
 import uno.iut.fr.uno.modele.Bluetooth.ClientThread;
+import uno.iut.fr.uno.modele.Bluetooth.ServerThread;
 import uno.iut.fr.uno.modele.carte.Carte;
 
 /**
@@ -13,10 +14,15 @@ import uno.iut.fr.uno.modele.carte.Carte;
 public class Player{
     private String name;
     private ArrayList<Carte>cartes;
+    private ServerThread thread = null;
 
     public Player(String name){
         cartes = new ArrayList<>();
         this.name = name;
+    }
+
+    public void setThread(ServerThread thread){
+        this.thread = thread;
     }
 
     public void addCarte (Carte carte){

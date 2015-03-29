@@ -39,6 +39,7 @@ import uno.iut.fr.uno.modele.Bluetooth.AcceptServerThread;
 import uno.iut.fr.uno.modele.Bluetooth.ConnectClientThread;
 import uno.iut.fr.uno.modele.Board;
 import uno.iut.fr.uno.modele.Game;
+import uno.iut.fr.uno.modele.IStrategyCommandeResolverServer;
 import uno.iut.fr.uno.modele.Player;
 import uno.iut.fr.uno.modele.carte.Carte;
 
@@ -76,7 +77,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         l1 = (ListView)findViewById(R.id.listView);
 
         ba = BluetoothAdapter.getDefaultAdapter();
-
 
         // Register the BroadcastReceiver
         mArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1);
@@ -152,7 +152,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             for (BluetoothDevice device : pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
                 mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                Log.i("device", device.getUuids().toString());
+                devices.add(device);
+                Log.i("device", device.getBluetoothClass().toString());
+                Log.i("device", device.toString());
+                Log.i("device", "end");
             }
+            Log.i("device master", UUID.fromString(AcceptServerThread.BT_SERVER_UUID_INSECURE).toString());
         }
         /*Player p1 = new Player("george");
         Player p2 = new Player("charle");
@@ -207,5 +213,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     public void setText (Carte carte){
         t1.setText(carte.toString());
+    }
+
+    public void onClickStart(View view){
+        Board.getInstance().setPlayers(IStrategyCommandeResolverServer.getPlayers());
+        Board.getInstance().giveCarte();
+        Log.i("En route", "en route");
+        Toast.makeText(this, Board.getInstance().toString(), Toast.LENGTH_LONG).show();
     }
 }

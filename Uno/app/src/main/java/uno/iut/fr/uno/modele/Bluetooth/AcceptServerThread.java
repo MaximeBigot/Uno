@@ -21,6 +21,8 @@ import uno.iut.fr.uno.R;
 import uno.iut.fr.uno.Test;
 import uno.iut.fr.uno.modele.Board;
 import uno.iut.fr.uno.modele.Color;
+import uno.iut.fr.uno.modele.IStrategyCommandeResolverServer;
+import uno.iut.fr.uno.modele.Player;
 import uno.iut.fr.uno.modele.carte.Carte;
 
 /**
@@ -36,7 +38,7 @@ public class AcceptServerThread extends Thread{
         this.activity = activity;
         try{
             tmp = mAdapter.listenUsingRfcommWithServiceRecord(name, UUID.fromString(BT_SERVER_UUID_INSECURE));
-        }catch (IOException io){}
+        }catch (IOException ioe){Log.e("AcceptServerThread : IOException : ", "Instanciation socket", ioe);}
         mServerSocket = tmp;
     }
 
@@ -46,12 +48,16 @@ public class AcceptServerThread extends Thread{
             try{
                 socket = mServerSocket.accept();
                 ServerThread thread = new ServerThread(socket);
+                Player player = new Player(socket.toString());
+                IStrategyCommandeResolverServer.addPlayer(socket, player);
+                player.setThread(thread);
                 thread.start();
                 if(socket != null){
                     mServerSocket.close();
                     break;
                 }
             }catch (IOException ioe){
+                Log.e("AcceptServerThread : IOException : ", "Accept socket", ioe);
                 break;
             }
         }
